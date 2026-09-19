@@ -1,0 +1,3 @@
+"use client";
+import { useState } from "react";
+export function Materials() { const [material, setMaterial] = useState("SILVER"); return <section className="section section-dark materials"><div><div className="eyebrow mb-6">MATERIAL EXPERIENCE</div><div className={`material-object ${material.toLowerCase()}`} /><h2 className="display text-[clamp(60px,8vw,120px)] mt-8">CHOOSE<br/><i>YOUR MATERIAL</i></h2><div className="material-controls">{["SILVER","PLATINUM","CHAMPAGNE"].map(x => <button key={x} onClick={() => setMaterial(x)} className={`material-button ${material===x ? "active" : ""}`}>{x}</button>)}</div></div></section>; }

@@ -1,0 +1,1 @@
+export function FinalStatement() { return <section className="final section"><div><div className="eyebrow mb-8">AUREL / OBJECTS OF LIGHT</div><h2 className="display final-title">JEWELRY FOR<br/><i>MOMENTS THAT REMAIN.</i></h2><a href="#collection" className="eyebrow inline-block mt-12 border-b border-[var(--pearl)] pb-2">DISCOVER THE COLLECTION →</a></div></section>; }

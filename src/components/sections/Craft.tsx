@@ -1,0 +1,2 @@
+import { Reveal } from "@/components/ui/Reveal";
+export function Craft() { return <section id="craft" className="section"><div className="split"><Reveal><div><div className="eyebrow mb-7">01 / FORM — 02 / LIGHT — 03 / MATERIAL</div><h2 className="display craft-title">THE<br/>CRAFT</h2><p className="mt-10 max-w-sm text-sm leading-7 opacity-65">A sculptural study in light, form and precision. Every AUREL object is designed to catch a different moment of light.</p></div></Reveal><Reveal><div className="macro" /></Reveal></div></section>; }
