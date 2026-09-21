@@ -1,85 +1,50 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 
-interface HeroTypographyProps {
-  layer: "back" | "front";
-}
-
-export function HeroTypography({ layer }: HeroTypographyProps) {
-  const leftTextRef = useRef<HTMLDivElement | null>(null);
-  const rightTextRef = useRef<HTMLDivElement | null>(null);
+export function HeroTypography() {
+  const textRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // چون لایه front چیزی render نمی‌کند،
-    // نباید GSAP روی refهای null اجرا شود.
-    if (layer === "front") return;
-
-    const left = leftTextRef.current;
-    const right = rightTextRef.current;
-
-    if (!left || !right) return;
-
     const ctx = gsap.context(() => {
       gsap.fromTo(
-        [left, right],
-        {
-          opacity: 0,
-          y: 30,
-        },
+        textRef.current,
+        { opacity: 0, y: 30, scale: 0.98 },
         {
           opacity: 1,
           y: 0,
-          duration: 1.6,
-          delay: 0.25,
+          scale: 1,
+          duration: 2,
+          delay: 0.2,
           ease: "power3.out",
         }
       );
     });
 
     return () => ctx.revert();
-  }, [layer]);
-
-  if (layer === "front") return null;
+  }, []);
 
   return (
     <div
+      ref={textRef}
       className="
-        absolute inset-0
-        pointer-events-none
-        select-none
-        flex items-center justify-center
-        gap-[20vw] sm:gap-[22vw] md:gap-[24vw]
-        z-10
+        absolute inset-0 pointer-events-none select-none
+        flex items-center justify-center z-10
       "
-      aria-hidden="true"
     >
-      {/* سمت چپ */}
-      <div
-        ref={leftTextRef}
+      <h1
         className="
-          font-serif font-light text-[#F7F5F0]
-          text-[clamp(4rem,9.5vw,9rem)]
-          leading-none
-          tracking-[0.18em]
+          font-serif font-light leading-none tracking-[0.25em]
+          text-[clamp(4.5rem,13vw,12rem)]
+          /* ایجاد حالت نورانی شیک و شفافیت عالی برای پشت سوژه */
+          text-transparent bg-clip-text
+          bg-gradient-to-b from-[#F7F5F0]/30 via-[#F7F5F0]/15 to-transparent
+          drop-shadow-[0_10px_30px_rgba(255,255,255,0.03)]
         "
       >
-        AUR
-      </div>
-
-      {/* سمت راست */}
-      <div
-        ref={rightTextRef}
-        className="
-          font-serif font-light text-[#F7F5F0]
-          text-[clamp(4rem,9.5vw,9rem)]
-          leading-none
-          tracking-[0.18em]
-        "
-      >
-        EL
-      </div>
+        AUREL
+      </h1>
     </div>
   );
 }

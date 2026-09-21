@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
+import React, { useState, useEffect } from "react";
 
-export const Header: React.FC = () => {
+export function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,44 +16,67 @@ export const Header: React.FC = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 px-6 md:px-12 py-6 flex items-center justify-between ${
-        scrolled ? "bg-black/40 backdrop-blur-md py-4" : "bg-transparent"
-      }`}
+      className={`
+        fixed top-0 left-0 w-full z-50 transition-all duration-500
+        px-8 sm:px-14 py-6
+        flex items-center justify-between
+        ${scrolled ? "bg-[#050505]/70 backdrop-blur-md py-4 border-b border-white/5" : "bg-transparent"}
+      `}
     >
-      {/* سمت چپ: AR — COLLECTION 01 */}
-      <div className="flex items-center gap-3 text-xs tracking-widest text-[#B8B6B0] font-mono-luxury">
-        <span className="font-bold text-[#F7F5F0]">AR</span>
-        <span className="w-4 h-[1px] bg-[#B8B6B0]/40"></span>
-        <span className="hidden sm:inline text-[10px] opacity-80">COLLECTION 01</span>
-      </div>
-
-      {/* مرکز: لوگوی AUREL */}
-      <div className="absolute left-1/2 -translate-x-1/2">
-        <Link href="/" className="text-xl md:text-2xl font-serif-editorial tracking-[0.4em] font-light text-[#F7F5F0]">
+      {/* سمت چپ: لوگو + نشانگر زنده کلکسیون */}
+      <div className="flex items-center gap-6">
+        <a href="#" className="text-sm tracking-[0.3em] font-serif font-light text-[#F7F5F0]">
           AUREL
-        </Link>
+        </a>
+        <div className="hidden md:flex items-center gap-2 pl-6 border-l border-white/10">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+          </span>
+          <span className="text-[9px] tracking-[0.25em] text-[#E8E5DF]/50 uppercase font-mono">
+            2026 EDITION
+          </span>
+        </div>
       </div>
 
-      {/* سمت راست: منو و منوی دایره‌ای */}
-      <div className="flex items-center gap-8">
-        <nav className="hidden lg:flex items-center gap-8 text-[11px] font-mono-luxury tracking-[0.2em] text-[#E4E1DA]">
-          <Link href="/shop" className="hover:text-white transition-colors">COLLECTION</Link>
-          <Link href="/about" className="hover:text-white transition-colors">ABOUT</Link>
-          <Link href="/atelier" className="hover:text-white transition-colors">CRAFT</Link>
-          <Link href="/contact" className="hover:text-white transition-colors">CONTACT</Link>
-        </nav>
+      {/* وسط: لینک‌های ناوبری اصلی */}
+      <nav className="hidden lg:flex items-center gap-10">
+        {["COLLECTION", "ABOUT", "SAVOIR-FAIRE", "CONTACT"].map((item) => (
+          <a
+            key={item}
+            href={`#${item.toLowerCase()}`}
+            className="
+              relative text-[10px] tracking-[0.25em] text-[#E8E5DF]/70 uppercase font-light
+              transition-colors duration-300 hover:text-[#F7F5F0]
+              after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[1px]
+              after:bg-white/60 after:transition-all after:duration-300 hover:after:w-full
+            "
+          >
+            {item}
+          </a>
+        ))}
+      </nav>
 
-        {/* دکمه منوی دایره‌ای */}
+      {/* سمت راست: دکمه صدا + منوی همبرگری */}
+      <div className="flex items-center gap-6">
+        {/* دکمه صدای محیطی */}
         <button
-          aria-label="Toggle Menu"
-          className="w-8 h-8 rounded-full border border-[#B8B6B0]/30 flex items-center justify-center hover:border-white transition-all group cursor-pointer"
+          onClick={() => setIsMuted(!isMuted)}
+          className="hidden sm:flex items-center gap-2 text-[10px] tracking-[0.2em] text-[#E8E5DF]/60 hover:text-white transition-colors duration-300"
         >
-          <div className="w-2.5 h-2.5 flex flex-col justify-between items-center group-hover:scale-110 transition-transform">
-            <span className="w-full h-[1px] bg-[#F7F5F0]"></span>
-            <span className="w-full h-[1px] bg-[#F7F5F0]"></span>
+          <div className="flex items-end gap-[2px] h-3">
+            <span className={`w-[2px] bg-current transition-all duration-300 ${!isMuted ? "h-3 animate-pulse" : "h-1"}`} />
+            <span className={`w-[2px] bg-current transition-all duration-300 ${!isMuted ? "h-2 animate-pulse" : "h-2"}`} />
+            <span className={`w-[2px] bg-current transition-all duration-300 ${!isMuted ? "h-3.5 animate-pulse" : "h-1"}`} />
           </div>
+          <span>{isMuted ? "SOUND OFF" : "SOUND ON"}</span>
+        </button>
+
+        {/* دکمه منوی کشویی */}
+        <button className="px-4 py-1.5 rounded-full border border-white/15 text-[10px] tracking-[0.2em] text-[#E8E5DF] hover:border-white/40 hover:bg-white/5 transition-all duration-300">
+          MENU
         </button>
       </div>
     </header>
   );
-};
+}
