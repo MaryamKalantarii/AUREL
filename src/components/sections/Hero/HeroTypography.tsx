@@ -8,18 +8,39 @@ interface HeroTypographyProps {
 }
 
 export function HeroTypography({ layer }: HeroTypographyProps) {
-  const leftTextRef = useRef<HTMLDivElement>(null);
-  const rightTextRef = useRef<HTMLDivElement>(null);
+  const leftTextRef = useRef<HTMLDivElement | null>(null);
+  const rightTextRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    gsap.fromTo(
-      [leftTextRef.current, rightTextRef.current],
-      { opacity: 0, y: 30 },
-      { opacity: 1, y: 0, duration: 1.6, delay: 0.25, ease: "power3.out" }
-    );
-  }, []);
+    // چون لایه front چیزی render نمی‌کند،
+    // نباید GSAP روی refهای null اجرا شود.
+    if (layer === "front") return;
 
-  // برای جلوگیری از تداخل و شلوغی، تمام متن در لایه پشت انگشتر رندر می‌شود
+    const left = leftTextRef.current;
+    const right = rightTextRef.current;
+
+    if (!left || !right) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        [left, right],
+        {
+          opacity: 0,
+          y: 30,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1.6,
+          delay: 0.25,
+          ease: "power3.out",
+        }
+      );
+    });
+
+    return () => ctx.revert();
+  }, [layer]);
+
   if (layer === "front") return null;
 
   return (
@@ -29,13 +50,12 @@ export function HeroTypography({ layer }: HeroTypographyProps) {
         pointer-events-none
         select-none
         flex items-center justify-center
-        /* 💡 فاصله دقیق و متوازن بین AUR و EL */
         gap-[20vw] sm:gap-[22vw] md:gap-[24vw]
         z-10
       "
-      aria-hidden={false}
+      aria-hidden="true"
     >
-      {/* بخش سمت چپ - AUR */}
+      {/* سمت چپ */}
       <div
         ref={leftTextRef}
         className="
@@ -48,7 +68,7 @@ export function HeroTypography({ layer }: HeroTypographyProps) {
         AUR
       </div>
 
-      {/* بخش سمت راست - EL */}
+      {/* سمت راست */}
       <div
         ref={rightTextRef}
         className="
