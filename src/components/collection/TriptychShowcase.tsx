@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useRef } from 'react';
@@ -77,7 +76,7 @@ export const TriptychShowcase = () => {
         const moveX = gsap.utils.random(-120, 120);
         const moveY = gsap.utils.random(-80, 80);
 
-        // حرکت شناور
+        // Floating movement
         gsap.to(star, {
           x: moveX,
           y: moveY,
@@ -89,7 +88,7 @@ export const TriptychShowcase = () => {
           ease: 'sine.inOut',
         });
 
-        // چشمک زدن مستقل
+        // Independent blinking
         gsap.to(star, {
           opacity: gsap.utils.random(0.15, 0.95),
           duration: gsap.utils.random(0.8, 2.2),

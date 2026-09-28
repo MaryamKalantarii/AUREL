@@ -374,9 +374,9 @@ export const CollectionHero = () => {
         />
 
         {/* Soft central glow */}
-       {/* Warm champagne atmosphere behind the jewelry */}
-<div
-  className="
+        {/* Warm champagne atmosphere behind the jewelry */}
+        <div
+          className="
     absolute
     left-[50%]
     top-[48%]
@@ -388,11 +388,11 @@ export const CollectionHero = () => {
     bg-[#d8b47a]/[0.045]
     blur-[145px]
   "
-/>
+        />
 
-{/* Concentrated cream glow behind the stone */}
-<div
-  className="
+        {/* Concentrated cream glow behind the stone */}
+        <div
+          className="
     absolute
     left-[51%]
     top-[47%]
@@ -404,11 +404,11 @@ export const CollectionHero = () => {
     bg-[#f4dfbd]/[0.065]
     blur-[105px]
   "
-/>
+        />
 
-{/* Small bright champagne core */}
-<div
-  className="
+        {/* Small bright champagne core */}
+        <div
+          className="
     absolute
     left-[52%]
     top-[47%]
@@ -420,7 +420,7 @@ export const CollectionHero = () => {
     bg-[#fff0d0]/[0.045]
     blur-[70px]
   "
-/>
+        />
 
         {/* Warm central atmosphere */}
         <div
@@ -631,7 +631,7 @@ export const CollectionHero = () => {
             "
           />
 
-          
+
           {/* Orbit 2 */}
           <div
             className="
@@ -650,7 +650,7 @@ export const CollectionHero = () => {
             "
           />
 
-          
+
           {/* ==================================================
               JEWEL ARTWORK
           ================================================== */}
@@ -845,8 +845,8 @@ export const CollectionHero = () => {
                 top-[76%]
               "
             />
-            
-            
+
+
 
             {/* =================================================
                 OUTWARD LIGHT BURSTS
@@ -904,7 +904,7 @@ export const CollectionHero = () => {
             >
 
               <img
-                src="/images/test3.png"
+                src="/images/stone-necklace.png"
                 alt="The Aurora"
                 className="
                   relative

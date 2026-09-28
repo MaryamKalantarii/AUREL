@@ -88,7 +88,7 @@ export const EditorialStory = () => {
           />
         </div>
 
-      
+
 
         {/* Dark left side — exactly like reference */}
         <div

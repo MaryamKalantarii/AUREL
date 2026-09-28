@@ -8,7 +8,7 @@ import { Newsletter } from "@/components/collection/Newsletter";
 // import { Footer } from "@/components/Footer"; 
 import { TriptychShowcase } from "@/components/collection/TriptychShowcase";
 export default function CollectionPage() {
-  // فعال‌سازی اسکرول نرم Lenis برای صفحه کالکشن
+  //Enabling Lenis smooth scroll for the collection page
   useLenis();
 
   return (
