@@ -1,3 +1,4 @@
+// src/components/sections/Hero/HeroOrbit.tsx
 "use client";
 
 import React, { useEffect, useRef } from "react";
@@ -5,64 +6,40 @@ import gsap from "gsap";
 
 export function HeroOrbit() {
   const orbitRef = useRef<HTMLDivElement>(null);
-  const particlesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      if (!orbitRef.current) return;
-
-      // 1. چرخش مداوم و بسیار نرم مدار دور انگشتر
+    if (orbitRef.current) {
       gsap.to(orbitRef.current, {
-        rotateZ: 360,
-        duration: 35,
+        rotation: 360,
+        duration: 90,
         repeat: -1,
         ease: "none",
       });
-
-      // 2. انیمیشن شناوری ذرات نورانی
-      if (particlesRef.current) {
-        Array.from(particlesRef.current.children).forEach((particle, index) => {
-          gsap.to(particle, {
-            y: `-=${15 + index * 5}`,
-            x: `+=${index % 2 === 0 ? 10 : -10}`,
-            opacity: 0.8,
-            duration: 3 + index * 0.8,
-            repeat: -1,
-            yoyo: true,
-            ease: "sine.inOut",
-            delay: index * 0.3,
-          });
-        });
-      }
-    });
-
-    return () => ctx.revert();
+    }
   }, []);
 
   return (
-    <div className="absolute inset-0 pointer-events-none select-none flex items-center justify-center z-15">
-      {/* 1. 3D Elliptical Orbit Ring */}
+    <div className="absolute inset-0 z-15 pointer-events-none flex items-center justify-center overflow-hidden">
+      {/* بیضی مدار نوری دور انگشتر */}
       <div
         ref={orbitRef}
-        className="
-          w-[380px] sm:w-[480px] md:w-[580px] aspect-square
-          rounded-full border border-white/10
-          [transform:rotateX(72deg)_rotateY(-15deg)]
-          shadow-[0_0_15px_rgba(255,255,255,0.03)]
-          relative flex items-center justify-center
-        "
+        className="relative w-[580px] h-[280px] sm:w-[780px] sm:h-[360px] md:w-[950px] md:h-[420px] rounded-[50%] border border-[#FFE8C8]/30 rotate-[-14deg] [transform-style:preserve-3d]"
+        style={{
+          boxShadow: "0 0 20px rgba(255, 215, 150, 0.15), inset 0 0 20px rgba(255, 215, 150, 0.15)",
+        }}
       >
-        {/* یک نقطه نورانی کوچک روی محیط مدار */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-white/80 shadow-[0_0_8px_#ffffff]" />
+        {/* نقاط درخشان و پرنور روی مدار (Sparkle Points on Orbit) */}
+        <div className="absolute -top-[4px] left-[20%] w-2 h-2 rounded-full bg-[#FFF6E5] shadow-[0_0_15px_6px_rgba(255,225,160,0.9)]" />
+        <div className="absolute -bottom-[4px] right-[18%] w-2.5 h-2.5 rounded-full bg-[#FFFFFF] shadow-[0_0_18px_8px_rgba(255,235,180,1)]" />
+        <div className="absolute top-[45%] -right-[4px] w-1.5 h-1.5 rounded-full bg-[#FFE3B5] shadow-[0_0_12px_4px_rgba(255,200,120,0.8)]" />
       </div>
 
-      {/* 2. Ambient Dust Particles (ذرات معلق نورانی) */}
-      <div ref={particlesRef} className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-[35%] left-[42%] w-1 h-1 bg-white/40 rounded-full blur-[0.5px]" />
-        <div className="absolute top-[58%] left-[58%] w-1.5 h-1.5 bg-white/30 rounded-full blur-[0.5px]" />
-        <div className="absolute top-[48%] left-[38%] w-1 h-1 bg-white/50 rounded-full blur-[0.5px]" />
-        <div className="absolute top-[62%] left-[45%] w-1 h-1 bg-white/25 rounded-full blur-[0.5px]" />
-        <div className="absolute top-[30%] left-[55%] w-1 h-1 bg-white/35 rounded-full blur-[0.5px]" />
+      {/* ذرات شناور معلق طلایی (Golden Dust Particles) */}
+      <div className="absolute inset-0 opacity-60">
+        <div className="absolute top-1/3 left-1/3 w-1.5 h-1.5 bg-[#FFE0B2] rounded-full blur-[0.5px] shadow-[0_0_8px_#FFE0B2]" />
+        <div className="absolute top-2/3 right-1/3 w-1 h-1 bg-[#FFF3E0] rounded-full blur-[0.5px] shadow-[0_0_6px_#FFF3E0]" />
+        <div className="absolute top-1/2 left-1/4 w-2 h-2 bg-[#FFECB3] rounded-full blur-[1px] shadow-[0_0_10px_#FFECB3]" />
+        <div className="absolute bottom-1/3 right-1/4 w-1 h-1 bg-[#FFE0B2] rounded-full blur-[0.5px]" />
       </div>
     </div>
   );
