@@ -11,3 +11,96 @@ export function CartDrawer({ open, onClose }: { open: boolean; onClose: () => vo
     </aside>
   </div>;
 }
+export interface ProductMaterial {
+  id: string;
+  label: string;
+  gradient: string;
+  images: string[];
+}
+
+export interface Product {
+  id: string;
+  number: string;
+  slug: string;
+  name: string;
+  subTitle: string;
+  category: string;
+  price: string;
+  rawPrice: number;
+  rating: number;
+  reviewsCount: number;
+  description: string;
+  isBestSeller: boolean;
+  isDiscount: boolean;
+  isNew: boolean;
+  materials: ProductMaterial[];
+}
+
+export const allProducts: Product[] = [
+  {
+    id: '1',
+    number: '01 / 12',
+    slug: 'lumiere-ring',
+    name: 'THE LUMIÈRE RING',
+    subTitle: 'SOLITAIRE DIAMOND RING',
+    category: 'RINGS',
+    price: '$3,850',
+    rawPrice: 3850,
+    rating: 4.9,
+    reviewsCount: 124,
+    description: 'A timeless expression of pure beauty. The Lumière Ring captures light in its most refined form — crafted for a lifetime.',
+    isBestSeller: true,
+    isDiscount: false,
+    isNew: true,
+    materials: [
+      {
+        id: 'white-gold',
+        label: 'White Gold',
+        gradient: 'from-zinc-300 via-[#e4e4e7] to-zinc-500',
+        images: [
+          '/images/product-hero-model1111.jpg',
+          '/images/product-detail-2.jpg',
+          '/images/product-detail-3.jpg',
+          '/images/product-detail-4.jpg',
+          '/images/product-detail-5.jpg',
+        ],
+      },
+      {
+        id: 'yellow-gold',
+        label: 'Yellow Gold',
+        gradient: 'from-[#ffd700] via-[#d4af37] to-[#996515]',
+        images: [
+          '/images/product-hero-model1111.jpg',
+          '/images/product-detail-2.jpg',
+          '/images/product-detail-3.jpg',
+          '/images/product-detail-4.jpg',
+          '/images/product-detail-5.jpg',
+        ],
+      },
+      {
+        id: 'rose-gold',
+        label: 'Rose Gold',
+        gradient: 'from-[#e8a598] via-[#f7d6cd] to-[#b76e79]',
+        images: [
+          '/images/product-hero-model1111.jpg',
+          '/images/product-detail-2.jpg',
+          '/images/product-detail-3.jpg',
+          '/images/product-detail-4.jpg',
+          '/images/product-detail-5.jpg',
+        ],
+      },
+      {
+        id: 'silver',
+        label: 'Sterling Silver',
+        gradient: 'from-slate-200 via-gray-300 to-slate-400',
+        images: [
+          '/images/product-hero-model1111.jpg',
+          '/images/product-detail-2.jpg',
+          '/images/product-detail-3.jpg',
+          '/images/product-detail-4.jpg',
+          '/images/product-detail-5.jpg',
+        ],
+      },
+    ],
+  },
+];

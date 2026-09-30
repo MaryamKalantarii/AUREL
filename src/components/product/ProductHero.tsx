@@ -16,16 +16,17 @@ export const ProductHero = () => {
         },
       });
 
+      // Entry sequence
       tl.fromTo(
         '.hero-image',
         {
           opacity: 0,
-          scale: 1.04,
+          scale: 1.05,
         },
         {
           opacity: 1,
           scale: 1,
-          duration: 1.8,
+          duration: 2,
           ease: 'power2.out',
         }
       )
@@ -33,17 +34,17 @@ export const ProductHero = () => {
           '.hero-eyebrow',
           {
             opacity: 0,
-            y: 16,
+            y: 20,
           },
           {
             opacity: 1,
             y: 0,
-            duration: 0.8,
+            duration: 0.9,
           },
-          '-=1'
+          '-=1.2'
         )
         .fromTo(
-          '.hero-title',
+          '.hero-title-line',
           {
             opacity: 0,
             y: 30,
@@ -51,22 +52,23 @@ export const ProductHero = () => {
           {
             opacity: 1,
             y: 0,
-            duration: 1.1,
+            duration: 1,
+            stagger: 0.12,
           },
-          '-=0.55'
+          '-=0.7'
         )
         .fromTo(
           '.hero-description',
           {
             opacity: 0,
-            y: 18,
+            y: 20,
           },
           {
             opacity: 1,
             y: 0,
             duration: 0.8,
           },
-          '-=0.65'
+          '-=0.6'
         )
         .fromTo(
           '.hero-cta',
@@ -85,9 +87,11 @@ export const ProductHero = () => {
           '.hero-pagination',
           {
             opacity: 0,
+            x: 15,
           },
           {
             opacity: 1,
+            x: 0,
             duration: 0.8,
           },
           '-=0.6'
@@ -101,249 +105,62 @@ export const ProductHero = () => {
   return (
     <section
       ref={containerRef}
-      className="
-        relative
-        min-h-[680px]
-        h-[100svh]
-        w-full
-        overflow-hidden
-        bg-[#080706]
-        text-[#f4f0e8]
-        isolate
-      "
+      className="relative min-h-[680px] h-[100svh] w-full overflow-hidden bg-[#09090b] text-[#f4f4f5] isolate"
     >
-      {/* Hero image */}
-      <div className="hero-image absolute inset-0 overflow-hidden bg-[#080706]">
+      {/* Background Hero Image */}
+      <div className="hero-image absolute inset-0 overflow-hidden bg-[#09090b]">
         <Image
           src="/images/product-hero-model2.png"
-          alt="Timeless Beauty in Every Detail"
+          alt="Timeless Beauty"
           fill
           priority
           sizes="100vw"
-          className="
-            object-cover
-            object-[62%_center]
-            brightness-[0.98]
-            contrast-[1.04]
-            saturate-[0.96]
-            transform-gpu
-          "
+          className="object-cover object-[62%_center] brightness-[0.9] contrast-[1.08] saturate-[0.85] transform-gpu"
         />
       </div>
 
-      {/* Soft left-side readability gradient */}
-      <div
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-          bg-gradient-to-r
-          from-[#050403]/[0.58]
-          via-[#050403]/[0.32]
-          via-[36%]
-          to-transparent
-        "
-      />
+      {/* Dark Silver Gradients & Vignette */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#09090b]/90 via-[#09090b]/50 via-40% to-transparent" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#09090b] via-transparent to-black/30 opacity-90" />
 
-      {/* Very soft bottom cinematic fade */}
-      <div
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-          bg-gradient-to-t
-          from-[#050403]/[0.30]
-          via-transparent
-          to-transparent
-        "
-      />
+      {/* Subtle Ice-Silver Ambient Glow */}
+      <div className="pointer-events-none absolute left-[15%] top-[35%] h-[450px] w-[450px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-slate-400/[0.04] blur-[140px]" />
 
-      {/* Warm cinematic atmosphere */}
-      <div
-        className="
-          pointer-events-none
-          absolute
-          left-[38%]
-          top-[43%]
-          h-[500px]
-          w-[500px]
-          -translate-x-1/2
-          -translate-y-1/2
-          rounded-full
-          bg-[#a8753d]/[0.08]
-          blur-[130px]
-        "
-      />
-
-      {/* Subtle warm glow around the jewelry area */}
-      <div
-        className="
-          pointer-events-none
-          absolute
-          right-[27%]
-          top-[42%]
-          h-[360px]
-          w-[360px]
-          -translate-y-1/2
-          rounded-full
-          bg-[#c18b4d]/[0.045]
-          blur-[110px]
-        "
-      />
-
-      {/* Main content */}
-      <div
-        className="
-          relative
-          z-10
-          mx-auto
-          flex
-          h-full
-          w-full
-          max-w-[1700px]
-          items-center
-          px-7
-          pb-10
-          pt-20
-          sm:px-10
-          lg:px-14
-          xl:px-16
-        "
-      >
-        <div
-          className="
-            hero-content
-            w-full
-            max-w-[520px]
-            -translate-y-2
-            sm:max-w-[560px]
-            lg:-translate-y-5
-          "
-        >
+      {/* Main Content */}
+      <div className="relative z-10 mx-auto flex h-full w-full max-w-[1700px] items-center px-6 pb-12 pt-20 sm:px-10 lg:px-14 xl:px-16">
+        <div className="hero-content w-full max-w-[580px] -translate-y-2 lg:-translate-y-4">
+          
           {/* Eyebrow */}
-          <div className="hero-eyebrow mb-5 flex items-center gap-4 sm:mb-6">
-            <span className="h-px w-7 bg-[#d2c5ad]/60" />
-
-            <span
-              className="
-                font-mono-luxury
-                text-[8px]
-                uppercase
-                tracking-[0.34em]
-                text-[#d7cfc1]
-                sm:text-[9px]
-              "
-            >
-              OBJECTS OF LIGHT.
+          <div className="hero-eyebrow mb-6 flex items-center gap-4">
+            <span className="h-px w-8 bg-zinc-500/50" />
+            <span className="font-mono text-[8.5px] uppercase tracking-[0.35em] text-zinc-400 sm:text-[9.5px]">
+              OBJECTS OF LIGHT
             </span>
           </div>
 
-          {/* Main title */}
-          <h1
-            className="
-              hero-title
-              max-w-[560px]
-              font-serif-editorial
-              text-[43px]
-              font-light
-              uppercase
-              leading-[0.98]
-              tracking-[0.015em]
-              text-[#f5f1e9]
-              sm:text-[52px]
-              md:text-[58px]
-              lg:text-[62px]
-              xl:text-[66px]
-            "
-          >
-            TIMELESS BEAUTY
-            <br />
-            IN EVERY DETAIL.
+          {/* Title */}
+          <h1 className="hero-title flex flex-col font-serif text-[42px] font-extralight uppercase leading-[0.96] tracking-[0.06em] text-white drop-shadow-md sm:text-[54px] md:text-[62px] lg:text-[68px] xl:text-[72px]">
+            <span className="hero-title-line block">TIMELESS BEAUTY</span>
+            <span className="hero-title-line block text-zinc-300">IN EVERY DETAIL.</span>
           </h1>
 
           {/* Description */}
-          <p
-            className="
-              hero-description
-              mt-6
-              max-w-[330px]
-              font-serif-editorial
-              text-[12px]
-              font-light
-              leading-[1.65]
-              tracking-[0.015em]
-              text-[#d0c9bf]
-              sm:mt-7
-              sm:text-[13px]
-            "
-          >
-            Exquisite jewelry, crafted for those who
-            <br className="hidden sm:block" />
-            see beauty in every moment.
+          <p className="hero-description mt-7 max-w-[360px] font-serif text-[13px] font-light leading-[1.7] tracking-[0.02em] text-zinc-400 sm:text-[14px]">
+            Exquisite craftsmanship designed for those who value subtle elegance and modern sophistication.
           </p>
 
-          {/* CTA */}
-          <div className="hero-cta mt-8 sm:mt-9">
+          {/* CTA Button */}
+          <div className="hero-cta mt-9 sm:mt-11">
             <a
               href="#collection-grid"
-              className="
-                group
-                inline-flex
-                items-center
-                gap-4
-                font-mono-luxury
-                text-[8px]
-                uppercase
-                tracking-[0.22em]
-                text-[#e2dbd0]
-                transition-colors
-                duration-500
-                hover:text-white
-                sm:text-[9px]
-              "
+              className="group inline-flex items-center gap-4 font-mono text-[9px] font-medium uppercase tracking-[0.25em] text-white transition-all duration-300 hover:text-zinc-300 sm:text-[10px]"
             >
-              <span>EXPLORE COLLECTION</span>
+              <span className="border-b border-zinc-700 pb-1 transition-colors duration-300 group-hover:border-white">
+                EXPLORE COLLECTION
+              </span>
 
-              <span
-                className="
-                  relative
-                  flex
-                  h-7
-                  w-10
-                  items-center
-                  justify-center
-                  overflow-hidden
-                  border-b
-                  border-[#aaa196]/60
-                  transition-all
-                  duration-500
-                  group-hover:w-12
-                  group-hover:border-[#e1d5bf]
-                "
-              >
-                <span
-                  className="
-                    absolute
-                    left-0
-                    h-px
-                    w-5
-                    bg-[#d7cbbb]
-                    transition-all
-                    duration-500
-                    group-hover:w-7
-                  "
-                />
-
-                <span
-                  className="
-                    absolute
-                    right-0
-                    text-[11px]
-                    transition-transform
-                    duration-500
-                    group-hover:translate-x-1
-                  "
-                >
+              <span className="flex h-8 w-8 items-center justify-center rounded-full border border-zinc-700 bg-zinc-900/50 backdrop-blur-sm transition-all duration-300 group-hover:border-white group-hover:bg-white group-hover:text-black">
+                <span className="text-[12px] transition-transform duration-300 group-hover:translate-x-0.5">
                   →
                 </span>
               </span>
@@ -352,64 +169,17 @@ export const ProductHero = () => {
         </div>
       </div>
 
-      {/* Right-side pagination */}
-      <div
-        className="
-          hero-pagination
-          absolute
-          right-6
-          top-1/2
-          z-20
-          hidden
-          -translate-y-1/2
-          flex-col
-          items-center
-          gap-4
-          lg:right-8
-          lg:flex
-          xl:right-10
-        "
-      >
-        <span
-          className="
-            font-mono-luxury
-            text-[8px]
-            tracking-[0.12em]
-            text-[#eee8dd]
-          "
-        >
+      {/* Right Pagination Indicator */}
+      <div className="hero-pagination absolute right-8 top-1/2 z-20 hidden -translate-y-1/2 flex-col items-center gap-5 lg:flex xl:right-12">
+        <span className="font-mono text-[9px] font-medium tracking-[0.15em] text-white">
           01
         </span>
 
-        <div
-          className="
-            relative
-            h-20
-            w-px
-            overflow-hidden
-            bg-white/[0.16]
-          "
-        >
-          <span
-            className="
-              absolute
-              left-0
-              top-0
-              h-[42%]
-              w-full
-              bg-[#ddd2bd]
-            "
-          />
+        <div className="relative h-20 w-px bg-zinc-800">
+          <span className="absolute left-0 top-0 h-[40%] w-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]" />
         </div>
 
-        <span
-          className="
-            font-mono-luxury
-            text-[8px]
-            tracking-[0.12em]
-            text-[#827d75]
-          "
-        >
+        <span className="font-mono text-[9px] tracking-[0.15em] text-zinc-600">
           04
         </span>
       </div>
