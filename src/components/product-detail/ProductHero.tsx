@@ -23,7 +23,7 @@ const MATERIALS = [
     label: 'Yellow Gold', 
     gradient: 'from-[#ffd700] via-[#d4af37] to-[#996515]',
     images: [
-      '/images/product-hero-model2.png', // در صورت داشتن تصویر متناسب قرار دهید
+      '/images/product-hero-model2.png',
       '/images/product-detail-2.png',
       '/images/product-detail-3.png',
       '/images/product-detail-4.png',
@@ -42,7 +42,6 @@ const MATERIALS = [
       '/images/product-detail-5.png',
     ]
   },
-
 ];
 
 export const ProductHero = () => {
@@ -103,7 +102,7 @@ export const ProductHero = () => {
             <div className="relative flex-1 aspect-[4/5] bg-zinc-900 overflow-hidden group">
               <Image
                 key={`${selectedMaterial}-${selectedImage}`}
-                src={currentImages[selectedImage] || currentImages[0]}
+                src={currentImages[selectedImage] || MATERIALS[0].images[0]}
                 alt="THE LUMIÈRE RING"
                 fill
                 priority
@@ -152,7 +151,7 @@ export const ProductHero = () => {
               </div>
             </div>
 
-            {/* Material Selector (جدید) */}
+            {/* Material Selector */}
             <div className="hero-anim-item mb-8">
               <div className="flex items-center justify-between mb-3">
                 <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-400">MATERIAL</span>
@@ -263,7 +262,7 @@ export const ProductHero = () => {
           </div>
 
           <div className="relative flex-1 my-8 max-w-5xl mx-auto w-full">
-            <Image src={currentImages[selectedImage] || currentImages[0]} alt="" fill className="object-contain" />
+            <Image src={currentImages[selectedImage] || MATERIALS[0].images[0]} alt="" fill className="object-contain" />
           </div>
 
           <div className="flex justify-center gap-8 text-white font-mono text-xs tracking-widest">
