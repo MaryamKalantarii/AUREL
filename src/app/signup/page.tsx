@@ -42,7 +42,7 @@ export default function SignupPage() {
           position: absolute;
           inset: 0;
           z-index: 0;
-          background-image: url('/images/aurel-signup.jpg');
+          background-image: url('/images/aurel-signup.png');
           background-size: 1000px auto;
           background-position: right 4% center;
           background-repeat: no-repeat;
