@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
@@ -64,40 +65,60 @@ const COLUMNS_DATA: ColumnData[] = [
 export function CraftSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const columnsRef = useRef<(HTMLDivElement | null)[]>([]);
-
   const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReducedMotion(mediaQuery.matches);
-    const handleChange = () => setReducedMotion(mediaQuery.matches);
-    mediaQuery.addEventListener("change", handleChange);
-    return () => mediaQuery.removeEventListener("change", handleChange);
+    const mediaQuery = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    );
+
+    const updateMotionPreference = () => {
+      setReducedMotion(mediaQuery.matches);
+    };
+
+    updateMotionPreference();
+
+    mediaQuery.addEventListener("change", updateMotionPreference);
+
+    return () => {
+      mediaQuery.removeEventListener("change", updateMotionPreference);
+    };
   }, []);
 
-  // Staggered Entrance ScrollTrigger Animation
   useEffect(() => {
     const section = sectionRef.current;
+
     if (!section) return;
 
     const ctx = gsap.context(() => {
-      const validCols = columnsRef.current.filter(Boolean);
+      const validColumns = columnsRef.current.filter(
+        (column): column is HTMLDivElement => column !== null
+      );
+
+      if (reducedMotion) {
+        gsap.set(validColumns, {
+          opacity: 1,
+          y: 0,
+        });
+
+        return;
+      }
 
       gsap.fromTo(
-        validCols,
+        validColumns,
         {
           opacity: 0,
-          y: 35,
+          y: 30,
         },
         {
           opacity: 1,
           y: 0,
-          duration: 0.85,
-          stagger: 0.15,
+          duration: 0.8,
+          stagger: 0.12,
           ease: "power3.out",
           scrollTrigger: {
             trigger: section,
-            start: "top 78%",
+            start: "top 85%",
             toggleActions: "play none none reverse",
           },
         }
@@ -111,91 +132,146 @@ export function CraftSection() {
     <section
       ref={sectionRef}
       className="
-        relative
-        w-full
-        min-h-[550px]
-        h-[68vh]
-        max-h-[850px]
-        overflow-hidden
-        select-none
-        bg-[#100F0E]
-        text-[#F3EFE6]
+        relative isolate w-full
+        overflow-hidden select-none
+        bg-[#100F0E] text-[#F3EFE6]
       "
     >
-      {/* ------------------------------------------------------------- */}
-      {/* لایه پس‌زمینه اصلی */}
-      {/* ------------------------------------------------------------- */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
+      {/* Main background */}
+      <div className="pointer-events-none absolute inset-0 z-0">
         <Image
           src="/images/back.jpg"
           alt="AUREL Atmosphere Background"
           fill
           priority
-          className="object-cover object-center brightness-[0.38] contrast-[1.15]"
+          sizes="100vw"
+          className="
+            object-cover object-center
+            brightness-[0.38] contrast-[1.15]
+          "
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#100F0E]/70 via-[#100F0E]/30 to-[#100F0E]/85" />
+
+        <div
+          className="
+            absolute inset-0
+            bg-gradient-to-b
+            from-[#100F0E]/75
+            via-[#100F0E]/40
+            to-[#100F0E]/90
+          "
+        />
       </div>
 
-      {/* ------------------------------------------------------------- */}
-      {/* گرید ۴ ستونه Editorial Luxury */}
-      {/* ------------------------------------------------------------- */}
-      <div className="relative z-10 w-full h-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 divide-y md:divide-y-0 lg:divide-x divide-white/[0.12]">
+      {/* Responsive editorial grid */}
+      <div
+        className="
+          relative z-10 grid w-full
+          grid-cols-1
+          sm:grid-cols-2
+          lg:grid-cols-4
+          divide-y divide-white/[0.12]
+          sm:divide-y-0
+          sm:divide-x sm:divide-white/[0.12]
+        "
+      >
         {COLUMNS_DATA.map((col, idx) => (
-          <div
+          <article
             key={col.id}
             ref={(el) => {
               columnsRef.current[idx] = el;
             }}
             className="
-              group
-              relative
-              w-full
-              h-full
-              min-h-[50vh]
-              lg:min-h-full
-              flex
-              flex-col
-              justify-end
-              p-6
-              md:p-8
-              lg:p-10
-              xl:p-12
+              group relative isolate
+              flex w-full flex-col justify-end
+              min-h-[440px]
+              h-[70svh]
+              max-h-[760px]
               overflow-hidden
-              cursor-pointer
+              px-6 py-8
+              sm:min-h-[460px]
+              sm:h-[58svh]
+              sm:px-6 sm:py-8
+              md:min-h-[500px]
+              md:px-8 md:py-9
+              lg:min-h-[600px]
+              lg:h-[72vh]
+              lg:px-5 lg:py-8
+              xl:px-8 xl:py-10
+              2xl:px-10 2xl:py-12
             "
           >
-            {/* تصویر Full Bleed هر ستون */}
-            <div className="absolute inset-0 z-0 overflow-hidden">
+            {/* Full-bleed image */}
+            <div className="absolute inset-0 z-[-1] overflow-hidden">
               <Image
                 src={col.imageSrc}
                 alt={col.imageAlt}
                 fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                sizes="
+                  (max-width: 639px) 100vw,
+                  (max-width: 1023px) 50vw,
+                  (max-width: 1535px) 25vw,
+                  25vw
+                "
                 className="
-                  object-cover
-                  object-center
-                  brightness-[0.72]
-                  contrast-[1.08]
-                  transition-all
-                  duration-700
-                  ease-out
-                  group-hover:scale-[1.04]
-                  group-hover:brightness-[0.85]
+                  object-cover object-center
+                  brightness-[0.72] contrast-[1.08]
+                  transition-transform duration-700 ease-out
+                  motion-safe:group-hover:scale-[1.04]
+                  motion-safe:group-hover:brightness-[0.85]
                 "
               />
-              {/* اورلی گرادیان برای خوانایی متون */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#100F0E] via-[#100F0E]/40 to-transparent opacity-90 transition-opacity duration-500 group-hover:opacity-75" />
+
+              <div
+                className="
+                  absolute inset-0
+                  bg-gradient-to-t
+                  from-[#100F0E]
+                  via-[#100F0E]/45
+                  to-[#100F0E]/10
+                  opacity-95
+                  transition-opacity duration-500
+                  motion-safe:group-hover:opacity-80
+                "
+              />
             </div>
 
-            {/* محتوای متنی و دکمه */}
-            <div className="relative z-10 space-y-5 transform transition-transform duration-500 group-hover:-translate-y-1">
-              {/* Tagline */}
-              <span className="block text-[9px] font-mono tracking-[0.35em] text-[#A89379] uppercase">
+            {/* Text content */}
+            <div
+              className="
+                relative z-10 w-full
+                space-y-4
+                sm:space-y-4
+                lg:space-y-3
+                xl:space-y-4
+                transition-transform duration-500
+                motion-safe:group-hover:-translate-y-1
+              "
+            >
+              <span
+                className="
+                  block font-mono
+                  text-[9px] sm:text-[9px]
+                  tracking-[0.25em] sm:tracking-[0.3em]
+                  xl:tracking-[0.35em]
+                  leading-relaxed
+                  text-[#B5A087] uppercase
+                "
+              >
                 {col.tagline}
               </span>
 
-              {/* Heading اصلی */}
-              <h3 className="font-serif font-light text-2xl md:text-3xl lg:text-3xl xl:text-[2.2rem] leading-[1.08] tracking-[-0.02em] text-[#F3EFE6]">
+              <h3
+                className="
+                  font-serif font-light
+                  text-[clamp(1.65rem,3.1vw,2.5rem)]
+                  lg:text-[clamp(1.45rem,1.9vw,2.1rem)]
+                  xl:text-[2.2rem]
+                  leading-[1.08]
+                  tracking-[-0.035em]
+                  text-[#F3EFE6]
+                  break-words
+                "
+              >
                 {col.title.map((line, i) => (
                   <React.Fragment key={i}>
                     {line}
@@ -204,41 +280,63 @@ export function CraftSection() {
                 ))}
               </h3>
 
-              {/* توضیحات */}
-              <p className="text-[9px] md:text-[10px] font-light tracking-[0.18em] leading-[1.75] text-[#D8CCB8] uppercase whitespace-pre-line max-w-xs">
+              <p
+                className="
+                  max-w-[280px]
+                  text-[10px] sm:text-[10px]
+                  lg:text-[9px] xl:text-[10px]
+                  font-light
+                  tracking-[0.12em] xl:tracking-[0.16em]
+                  leading-[1.8]
+                  text-[#D8CCB8]
+                  uppercase whitespace-pre-line
+                "
+              >
                 {col.description}
               </p>
 
-              {/* دکمه اختصاصی دایره‌ای */}
-              <div className="pt-2">
-                <div className="inline-flex items-center gap-3.5 group/btn">
+              {/* Circular action */}
+              <div className="pt-2 sm:pt-3">
+                <div className="inline-flex items-center gap-3 group/btn">
                   <div
                     className="
-                      w-8
-                      h-8
+                      flex h-9 w-9 shrink-0
+                      items-center justify-center
                       rounded-full
-                      border
-                      border-[#A89379]/60
-                      flex
-                      items-center
-                      justify-center
-                      transition-all
-                      duration-500
-                      group-hover:border-[#F3EFE6]
-                      group-hover:bg-[#F3EFE6]/10
+                      border border-[#A89379]/60
+                      transition-all duration-500
+                      motion-safe:group-hover:border-[#F3EFE6]
+                      motion-safe:group-hover:bg-[#F3EFE6]/10
                     "
                   >
-                    <span className="text-xs text-[#F3EFE6] transform transition-transform duration-300 group-hover:translate-x-0.5">
+                    <span
+                      className="
+                        text-sm text-[#F3EFE6]
+                        transition-transform duration-300
+                        motion-safe:group-hover:translate-x-0.5
+                      "
+                      aria-hidden="true"
+                    >
                       →
                     </span>
                   </div>
-                  <span className="text-[8.5px] font-mono tracking-[0.28em] text-[#D8CCB8] uppercase transition-colors duration-300 group-hover:text-[#F3EFE6]">
+
+                  <span
+                    className="
+                      text-[9px]
+                      font-mono
+                      tracking-[0.2em] xl:tracking-[0.25em]
+                      text-[#D8CCB8] uppercase
+                      transition-colors duration-300
+                      motion-safe:group-hover:text-[#F3EFE6]
+                    "
+                  >
                     {col.buttonText}
                   </span>
                 </div>
               </div>
             </div>
-          </div>
+          </article>
         ))}
       </div>
     </section>
