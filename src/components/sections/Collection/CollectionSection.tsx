@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState } from "react";
@@ -9,7 +10,7 @@ interface CollectionItem {
   title: string;
   subtitle: string;
   materials: string;
-  positionClass: string; // موقعیت متن زیر هر قطعه
+  positionClass: string;
 }
 
 const COLLECTION_ITEMS: CollectionItem[] = [
@@ -42,126 +43,309 @@ const COLLECTION_ITEMS: CollectionItem[] = [
 export function CollectionSection() {
   const [activeIndex, setActiveIndex] = useState(1);
 
+  const activeItem = COLLECTION_ITEMS[activeIndex];
+
   const handleNext = () => {
     setActiveIndex((prev) => (prev + 1) % COLLECTION_ITEMS.length);
   };
 
   const handlePrev = () => {
-    setActiveIndex((prev) =>
-      prev === 0 ? COLLECTION_ITEMS.length - 1 : prev - 1
+    setActiveIndex(
+      (prev) => (prev - 1 + COLLECTION_ITEMS.length) % COLLECTION_ITEMS.length
     );
   };
 
   return (
     <section
       id="collection"
-      className="relative w-full h-screen min-h-[750px] bg-[#0B0A09] text-[#F7F5F0] overflow-hidden select-none"
+      className="
+        relative isolate w-full
+        h-[100svh] min-h-[680px]
+        md:min-h-[750px]
+        overflow-hidden
+        bg-[#0B0A09]
+        text-[#F7F5F0]
+        select-none
+      "
     >
-      {/* پس‌زمینه اصلی: تصویر ۴ قطعه جواهر روی پلتفرم معماری */}
-      <div className="absolute inset-0 z-0 w-full h-full">
+      {/* Background image */}
+      <div className="absolute inset-0 z-0 overflow-hidden bg-[#0B0A09]">
         <Image
           src="/images/bd8e548b-c2ec-4e4b-8a4f-faef911aab61.png"
-          alt="AUREL Collection"
+          alt="AUREL Fine Jewelry Collection"
           fill
           priority
           sizes="100vw"
-          className="object-cover object-center brightness-[0.9] contrast-[1.05]"
+          className="
+            object-contain
+            object-center
+            brightness-[0.9]
+            contrast-[1.05]
+            md:object-cover
+            md:object-center
+          "
         />
-        {/* سایه ملایم جهت خوانایی متون */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0B0A09]/90 via-transparent to-[#0B0A09]/60 pointer-events-none" />
+
+        {/* Cinematic overlays */}
+        <div
+          className="
+            pointer-events-none absolute inset-0
+            bg-gradient-to-b
+            from-[#0B0A09]/65
+            via-transparent
+            to-[#0B0A09]/70
+            md:from-[#0B0A09]/60
+            md:via-transparent
+            md:to-[#0B0A09]/90
+          "
+        />
+
+        <div
+          className="
+            pointer-events-none absolute inset-0
+            bg-gradient-to-r
+            from-[#0B0A09]/20
+            via-transparent
+            to-[#0B0A09]/20
+          "
+        />
+
+        {/* Subtle mobile vignette */}
+        <div
+          className="
+            pointer-events-none absolute inset-0
+            bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(11,10,9,0.35)_100%)]
+            md:hidden
+          "
+        />
       </div>
 
-      {/* ۱. بخش بالا سمت چپ: تیتر اصلی THE COLLECTION */}
-      <div className="absolute top-12 left-8 md:left-16 z-10 space-y-3 max-w-xs">
+      {/* Top editorial heading */}
+      <div
+        className="
+          absolute z-10
+          left-5 top-7
+          max-w-[260px]
+          space-y-3
+          sm:left-8 sm:top-10
+          sm:max-w-xs
+          md:left-16 md:top-12
+        "
+      >
         <div className="flex items-center gap-3">
-          <span className="font-mono text-[10px] tracking-[0.3em] text-[#B6A58C]">
+          <span className="font-mono text-[9px] tracking-[0.3em] text-[#B6A58C] sm:text-[10px]">
             04
           </span>
-          <span className="w-6 h-[1px] bg-[#B6A58C]/40" />
+
+          <span className="h-px w-6 bg-[#B6A58C]/50" />
         </div>
 
-        <h2 className="font-serif font-extralight text-3xl md:text-4xl lg:text-5xl tracking-[0.15em] leading-[1.1] text-[#F7F5F0] uppercase">
-          THE <br />
+        <h2
+          className="
+            font-serif font-extralight
+            text-[clamp(1.8rem,7vw,2.5rem)]
+            leading-[1.08]
+            tracking-[0.1em]
+            uppercase
+            sm:text-4xl
+            lg:text-5xl
+            lg:tracking-[0.15em]
+          "
+        >
+          THE
+          <br />
           COLLECTION
         </h2>
 
-        <p className="font-serif text-[11px] tracking-[0.15em] text-[#E4E1DA]/60 leading-relaxed font-light pt-2">
-          Objects shaped by light, <br />
+        <p
+          className="
+            max-w-[220px]
+            pt-1
+            font-serif font-light
+            text-[10px]
+            leading-[1.8]
+            tracking-[0.08em]
+            text-[#E4E1DA]/75
+            sm:text-[11px]
+            sm:tracking-[0.12em]
+          "
+        >
+          Objects shaped by light,
+          <br />
           designed to be remembered.
         </p>
       </div>
 
-      {/* ۲. برچسب‌های متنی زیر هر قطعه جواهر */}
-      <div className="hidden md:block absolute inset-0 z-10 pointer-events-none">
-        {COLLECTION_ITEMS.map((item) => (
+      {/* Desktop product labels */}
+      <div className="pointer-events-none absolute inset-0 z-10 hidden md:block">
+        {COLLECTION_ITEMS.map((item, index) => (
           <div
             key={item.id}
-            className={`absolute ${item.positionClass} space-y-1 text-left transition-opacity duration-500`}
+            className={`
+              absolute ${item.positionClass}
+              space-y-1
+              transition-opacity duration-500
+              ${activeIndex === index ? "opacity-100" : "opacity-65"}
+            `}
           >
-            <div className="flex items-center gap-2 mb-1">
-              <span className="font-mono text-[10px] text-[#B6A58C] tracking-[0.2em]">
+            <div className="mb-1 flex items-center gap-2">
+              <span className="font-mono text-[10px] tracking-[0.2em] text-[#B6A58C]">
                 {item.number}
               </span>
-              <span className="w-5 h-[1px] bg-[#B6A58C]/40" />
+
+              <span className="h-px w-5 bg-[#B6A58C]/50" />
             </div>
 
-            <h3 className="font-serif text-lg tracking-[0.25em] text-[#F7F5F0] uppercase font-light">
+            <h3 className="font-serif text-lg font-light tracking-[0.2em] text-[#F7F5F0]">
               {item.title}
             </h3>
 
-            <p className="font-mono text-[9px] tracking-[0.2em] text-[#E4E1DA]/60 uppercase">
+            <p className="font-mono text-[9px] tracking-[0.15em] text-[#E4E1DA]/65">
               {item.subtitle}
             </p>
 
-            <p className="font-mono text-[8px] tracking-[0.25em] text-[#B6A58C]/80 uppercase pt-0.5">
+            <p className="pt-0.5 font-mono text-[8px] tracking-[0.18em] text-[#B6A58C]/90">
               {item.materials}
             </p>
           </div>
         ))}
       </div>
 
-      {/* ۳. نشانگر عمودی سمت راست (Pagination Bar) */}
-      <div className="absolute right-8 md:right-12 top-1/2 -translate-y-1/2 z-10 flex flex-col items-center space-y-6">
-        <span className="font-mono text-[9px] tracking-[0.2em] text-[#E4E1DA]/40">
+      {/* Mobile active product information */}
+      <div
+        className="
+          absolute z-10
+          bottom-[132px]
+          left-5 right-16
+          md:hidden
+        "
+        aria-live="polite"
+      >
+        <div className="mb-3 flex items-center gap-2">
+          <span className="font-mono text-[9px] tracking-[0.25em] text-[#B6A58C]">
+            {activeItem.number}
+          </span>
+
+          <span className="h-px w-7 bg-[#B6A58C]/50" />
+        </div>
+
+        <h3 className="font-serif text-2xl font-light tracking-[0.2em]">
+          {activeItem.title}
+        </h3>
+
+        <p className="mt-1 font-mono text-[9px] tracking-[0.17em] text-[#E4E1DA]/75">
+          {activeItem.subtitle}
+        </p>
+
+        <p className="mt-2 font-mono text-[8px] tracking-[0.17em] text-[#B6A58C]">
+          {activeItem.materials}
+        </p>
+      </div>
+
+      {/* Right pagination indicator */}
+      <div
+        className="
+          absolute z-10
+          right-5 top-1/2
+          -translate-y-1/2
+          flex flex-col items-center gap-5
+          sm:right-8
+          md:right-12 md:gap-6
+        "
+      >
+        <span className="font-mono text-[8px] tracking-[0.15em] text-[#E4E1DA]/55">
           01
         </span>
-        <div className="relative w-[1px] h-20 bg-[#F7F5F0]/15">
+
+        <div className="relative h-16 w-px bg-[#F7F5F0]/20 sm:h-20">
           <div
-            className="absolute left-0 w-full bg-[#B6A58C] transition-all duration-500"
+            className="
+              absolute left-0 w-full
+              bg-[#B6A58C]
+              transition-[top] duration-500 ease-out
+            "
             style={{
-              height: "33.33%",
-              top: `${activeIndex * 33.33}%`,
+              height: `${100 / COLLECTION_ITEMS.length}%`,
+              top: `${(activeIndex * 100) / COLLECTION_ITEMS.length}%`,
             }}
           />
         </div>
-        <span className="font-mono text-[9px] tracking-[0.2em] text-[#E4E1DA]/40">
+
+        <span className="font-mono text-[8px] tracking-[0.15em] text-[#E4E1DA]/55">
           03
         </span>
       </div>
 
-      {/* ۴. کنترل‌های ناوبری پایین سمت چپ (Arrows) */}
-      <div className="absolute bottom-10 left-8 md:left-16 z-10 flex items-center gap-6">
-        <div className="flex items-center gap-4">
-          <button
-            onClick={handlePrev}
-            className="text-[#E4E1DA]/70 hover:text-[#F7F5F0] transition-colors p-2 -ml-2"
-            aria-label="Previous Item"
-          >
-            ←
-          </button>
+      {/* Bottom navigation */}
+      <div
+        className="
+          absolute z-20
+          bottom-6 left-5
+          flex items-center gap-4
+          sm:bottom-8 sm:left-8 sm:gap-6
+          md:bottom-10 md:left-16
+        "
+      >
+        <button
+          type="button"
+          onClick={handlePrev}
+          className="
+            flex h-10 w-8 items-center justify-center
+            text-lg text-[#E4E1DA]/75
+            transition-colors
+            hover:text-[#F7F5F0]
+            focus-visible:outline
+            focus-visible:outline-1
+            focus-visible:outline-[#B6A58C]
+          "
+          aria-label="Previous collection item"
+        >
+          ←
+        </button>
 
-          <span className="font-mono text-[10px] tracking-[0.3em] text-[#E4E1DA]/80">
-            0{activeIndex + 1} / 03
-          </span>
+        <span
+          className="
+            whitespace-nowrap
+            font-mono text-[9px]
+            tracking-[0.2em]
+            text-[#E4E1DA]/85
+            sm:text-[10px]
+            sm:tracking-[0.3em]
+          "
+          aria-live="polite"
+        >
+          0{activeIndex + 1} / 03
+        </span>
 
-          <button
-            onClick={handleNext}
-            className="text-[#E4E1DA]/70 hover:text-[#F7F5F0] transition-colors p-2"
-            aria-label="Next Item"
-          >
-            →
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={handleNext}
+          className="
+            flex h-10 w-8 items-center justify-center
+            text-lg text-[#E4E1DA]/75
+            transition-colors
+            hover:text-[#F7F5F0]
+            focus-visible:outline
+            focus-visible:outline-1
+            focus-visible:outline-[#B6A58C]
+          "
+          aria-label="Next collection item"
+        >
+          →
+        </button>
+      </div>
+
+      {/* Small bottom-right signature */}
+      <div
+        className="
+          absolute bottom-9 right-5 z-10
+          hidden sm:block
+          md:right-12
+        "
+      >
+        <span className="font-mono text-[8px] tracking-[0.3em] text-[#B6A58C]/65">
+          AUREL · OBJECTS OF LIGHT
+        </span>
       </div>
     </section>
   );

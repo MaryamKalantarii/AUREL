@@ -5,7 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { CollectionHero } from "@/components/collection/CollectionHero";
 import { EditorialStory } from "@/components/collection/EditorialStory";
 import { Newsletter } from "@/components/collection/Newsletter";
-// import { Footer } from "@/components/Footer"; 
+import { Footer } from "@/components/layout/Footer"; 
 import { TriptychShowcase } from "@/components/collection/TriptychShowcase";
 export default function CollectionPage() {
   //Enabling Lenis smooth scroll for the collection page
@@ -18,7 +18,7 @@ export default function CollectionPage() {
       <TriptychShowcase />
       <EditorialStory />
       <Newsletter />
-      {/* <Footer /> */}
+      <Footer />
     </main>
   );
 }
