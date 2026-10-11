@@ -1,81 +1,148 @@
+
 "use client";
 
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
+import Link from "next/link";
 
 export function HeroTypography() {
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const tagRef = useRef<HTMLDivElement>(null);
+  const copyRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
     const ctx = gsap.context(() => {
-      // انیمیشن ورود تایپوگرافی هنگام لود صفحه
+      if (reduceMotion) {
+        gsap.set(
+          [tagRef.current, titleRef.current, copyRef.current],
+          { opacity: 1, y: 0, scale: 1 }
+        );
+        return;
+      }
+
       gsap.fromTo(
         tagRef.current,
-        { opacity: 0, y: -15 },
-        { opacity: 1, y: 0, duration: 1.4, delay: 0.3, ease: "power3.out" }
+        { opacity: 0, y: -12 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          delay: 0.2,
+          ease: "power3.out",
+        }
       );
 
       gsap.fromTo(
         titleRef.current,
-        { opacity: 0, y: 40, scale: 0.98 },
-        { opacity: 1, y: 0, scale: 1, duration: 1.8, delay: 0.5, ease: "power3.out" }
+        { opacity: 0, y: 24, scale: 0.985 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 1.4,
+          delay: 0.35,
+          ease: "power3.out",
+        }
       );
-    });
 
-    // افکت پارالاکس تایپوگرافی با موس
-    const handleMouseMove = (e: MouseEvent) => {
-      const { innerWidth, innerHeight } = window;
-      const x = (e.clientX / innerWidth - 0.5) * -12;
-      const y = (e.clientY / innerHeight - 0.5) * -12;
+      gsap.fromTo(
+        copyRef.current,
+        { opacity: 0, y: 14 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          delay: 0.65,
+          ease: "power3.out",
+        }
+      );
+    }, container);
 
-      if (containerRef.current) {
-        gsap.to(containerRef.current, {
-          x: x,
-          y: y,
-          duration: 1.5,
-          ease: "power2.out",
-        });
+    const finePointer = window.matchMedia(
+      "(hover: hover) and (pointer: fine)"
+    );
+
+    const handleMouseMove = (event: MouseEvent) => {
+      if (
+        !finePointer.matches ||
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ) {
+        return;
       }
+
+      gsap.to(container, {
+        x: (event.clientX / window.innerWidth - 0.5) * -8,
+        y: (event.clientY / window.innerHeight - 0.5) * -8,
+        duration: 1.5,
+        ease: "power2.out",
+        overwrite: "auto",
+      });
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
+    if (finePointer.matches && !reduceMotion) {
+      window.addEventListener("mousemove", handleMouseMove, {
+        passive: true,
+      });
+    }
+
     return () => {
-      ctx.revert();
       window.removeEventListener("mousemove", handleMouseMove);
+      ctx.revert();
     };
   }, []);
 
   return (
     <div
       ref={containerRef}
-      className="absolute inset-0 pointer-events-none select-none z-10 flex flex-col justify-center items-start px-8 sm:px-16 md:px-24"
+      className="pointer-events-none absolute inset-x-0 top-[18%] z-10 flex flex-col items-center px-4 text-center select-none sm:inset-y-0 sm:top-0 sm:items-start sm:justify-center sm:px-16 sm:text-left md:px-24"
     >
-      {/* برچسب ادیتوریال بالای لوگو */}
       <div
         ref={tagRef}
-        className="flex items-center gap-4 mb-3 sm:mb-6 pl-2"
+        className="mb-3 flex items-center gap-2 sm:mb-6 sm:gap-4 sm:pl-2"
       >
-        <span className="w-8 sm:w-12 h-[1px] bg-[#E4E1DA]/40" />
-        <span className="text-[10px] sm:text-[12px] font-mono tracking-[0.35em] text-[#E4E1DA]/80 uppercase">
+        <span className="h-px w-5 bg-[#E4E1DA]/50 sm:w-12" />
+
+        <span className="whitespace-nowrap font-mono text-[8px] uppercase tracking-[0.2em] text-[#E4E1DA]/90 sm:text-xs sm:tracking-[0.35em]">
           OBJECTS OF LIGHT.
         </span>
+
+        <span className="h-px w-5 bg-[#E4E1DA]/50 sm:hidden" />
       </div>
 
-      {/* نام برند AUREL */}
       <h1
         ref={titleRef}
-        className="
-          font-serif font-light leading-none tracking-[0.22em] pl-[0.22em]
-          text-[clamp(4.5rem,14vw,12.5rem)]
-          text-transparent bg-clip-text
-          bg-gradient-to-b from-[#F7F5F0] via-[#E4E1DA]/90 to-[#B8B6B0]/40
-          drop-shadow-[0_10px_35px_rgba(0,0,0,0.5)]
-        "
+        className="bg-gradient-to-b from-[#F7F5F0] via-[#E4E1DA]/90 to-[#B8B6B0]/40 bg-clip-text pl-[0.12em] font-serif text-[clamp(3.2rem,15vw,5.2rem)] font-light leading-[0.9] tracking-[0.12em] text-transparent drop-shadow-[0_10px_35px_rgba(0,0,0,0.5)] sm:pl-[0.22em] sm:text-[clamp(4.5rem,14vw,12.5rem)] sm:tracking-[0.22em]"
       >
         AUREL
       </h1>
+
+      <p
+        ref={copyRef}
+        className="mt-5 max-w-[290px] text-[10px] font-light leading-[1.9] tracking-[0.08em] text-[#F7F5F0]/80 sm:mt-8 sm:max-w-[340px] sm:text-sm sm:leading-7"
+      >
+        Jewelry shaped by light,
+        <br className="sm:hidden" /> defined by feeling.
+
+        <span className="mt-2 block text-[8px] uppercase tracking-[0.19em] text-[#E4E1DA]/60 sm:text-[10px]">
+          A study in form, material & permanence
+        </span>
+      </p>
+
+      <Link
+        href="/collections"
+        className="pointer-events-auto mt-6 inline-flex items-center gap-4 border-b border-white/40 pb-2 text-[9px] tracking-[0.2em] text-[#F7F5F0] transition-colors hover:border-white sm:mt-8"
+      >
+        DISCOVER THE COLLECTION
+        <span className="text-sm">↗</span>
+      </Link>
     </div>
   );
 }

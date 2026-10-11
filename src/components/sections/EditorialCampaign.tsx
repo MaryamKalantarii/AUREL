@@ -152,7 +152,7 @@ export function EditorialCampaign() {
           className="absolute inset-0 z-0 w-full h-full will-change-transform"
         >
           <Image
-            src="/images/fb72d76c-9be9-41d3-8dca-40fc4d56d6a6.png"
+            src="/images/back1.jpg"
             alt="AUREL Editorial Campaign — Light Becomes Form"
             fill
             priority

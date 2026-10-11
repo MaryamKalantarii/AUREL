@@ -52,19 +52,19 @@ export function HeroBackground() {
   return (
     <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden bg-[#111111]">
       {/* تصویر اصلی کمپین لوکس */}
-      <div
-        ref={bgRef}
-        className="relative w-[106%] h-[106%] -left-[3%] -top-[3%] filter brightness-[1.02] contrast-[1.08]"
-      >
-        <Image
-          src="/images/hhh.jpg"
-          alt="AUREL High Jewelry Editorial Model"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-center md:object-[65%_center]"
-        />
-      </div>
+<div className="absolute inset-0 -z-10">
+  <picture>
+    <source
+      media="(max-width: 1023px)"
+      srcSet="/images/hero/hero-mobile.png"
+    />
+    <img
+      src="/images/hhh.jpg"
+      alt=""
+      className="h-full w-full object-cover object-center"
+    />
+  </picture>
+</div>
 
       {/* پرتو نوری قطری ملایم در بالای صحنه */}
       <div
