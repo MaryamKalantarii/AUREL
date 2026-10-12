@@ -64,7 +64,10 @@ const COLUMNS_DATA: ColumnData[] = [
 
 export function CraftSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const columnsRef = useRef<(HTMLDivElement | null)[]>([]);
+
+  // The elements are <article>, so HTMLElement is the appropriate type.
+  const columnsRef = useRef<(HTMLElement | null)[]>([]);
+
   const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
@@ -92,7 +95,7 @@ export function CraftSection() {
 
     const ctx = gsap.context(() => {
       const validColumns = columnsRef.current.filter(
-        (column): column is HTMLDivElement => column !== null
+        (column): column is HTMLElement => column !== null
       );
 
       if (reducedMotion) {

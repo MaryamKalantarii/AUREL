@@ -6,7 +6,9 @@
   --aurel-muted: #b8b0a5;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 .aurel-contact {
   position: relative;

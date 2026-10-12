@@ -665,7 +665,7 @@ export const AboutSection = () => {
               {/* Quote Block */}
               <div className="pt-8 border-t border-white/10">
                 <p className="font-serif italic text-base sm:text-lg text-[#D8C2A8] leading-relaxed mb-4">
-                  "{activeCraft.quote}"
+                  &quot;{activeCraft.quote}&quot;
                 </p>
                 <div className="flex items-center gap-3">
                   <span className="font-sans text-xs text-[#F7F5F0] font-medium">{activeCraft.author}</span>

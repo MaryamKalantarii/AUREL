@@ -37,6 +37,7 @@ const NECKLACE_OPTIONS: ProductOption[] = [
 /* Product image helper                                                       */
 /* -------------------------------------------------------------------------- */
 
+
 interface ProductImagesConfig {
   materials: ProductMaterial[];
 
@@ -46,7 +47,13 @@ interface ProductImagesConfig {
     title: string;
     image: string;
   }[];
+
+  BrandStory?: {
+    leftImage: string;
+    rightImage: string;
+  };
 }
+
 
 function createImages(
   config: ProductImagesConfig,

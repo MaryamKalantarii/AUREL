@@ -43,7 +43,7 @@ export const BrandStory = ({ product }: BrandStoryProps) => {
             </h2>
 
             <p className="mx-auto mb-8 max-w-sm font-serif text-base italic text-zinc-400">
-              "It's a symbol of your story. Of the moments that matter. Of the light that never fades."
+              <p>&quot;It&apos;s a timeless piece that never fades.&quot;</p>
             </p>
 
             <a
