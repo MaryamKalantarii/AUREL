@@ -1,7 +1,7 @@
 # AUREL — Objects of Light.
 
 <p align="center">
-  <img src="public/images/hero-ring.png" alt="AUREL — Objects of Light" width="100%" />
+  <img src="public/images/hero-bggg.png" alt="AUREL — Objects of Light" width="100%" />
 </p>
 
 <h3 align="center">A Digital Experience for a Modern Luxury Jewelry House</h3>
